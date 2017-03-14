@@ -20,6 +20,7 @@
 package org.sonar.php.parser;
 
 import com.sonar.sslr.api.typed.GrammarBuilder;
+import com.sonar.sslr.api.typed.Optional;
 import java.util.List;
 import org.sonar.php.api.PHPKeyword;
 import org.sonar.php.api.PHPPunctuator;
@@ -1175,9 +1176,9 @@ public class PHPGrammar {
       f.heredocStringLiteral(b.token(PHPLexicalGrammar.HEREDOC)));
   }
 
-  public List<ExpressionTree> HEREDOC_BODY() {
-    return b.<List<ExpressionTree>>nonterminal(PHPLexicalGrammar.HEREDOC_BODY).is(
-      b.oneOrMore(b.firstOf(
+  public Optional<List<ExpressionTree>> HEREDOC_BODY() {
+    return b.<Optional<List<ExpressionTree>>>nonterminal(PHPLexicalGrammar.HEREDOC_BODY).is(
+      b.zeroOrMore(b.firstOf(
         HEREDOC_STRING_CHARACTERS(),
         ENCAPSULATED_STRING_VARIABLE())));
   }

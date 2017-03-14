@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
+import com.sonar.sslr.api.typed.Optional;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -52,9 +53,10 @@ public class HeredocStringLiteralTreeImpl extends PHPTree implements HeredocStri
     Preconditions.checkArgument(matcher.matches());
     String heredocBody = matcher.group(3);
 
-    this.elements = (List<ExpressionTree>) PHPParserBuilder.createParser(PHPLexicalGrammar.HEREDOC_BODY, tmpHeredocToken.line())
+    Optional<List<ExpressionTree>> optionalElements = (Optional<List<ExpressionTree>>) PHPParserBuilder.createParser(PHPLexicalGrammar.HEREDOC_BODY, tmpHeredocToken.line())
       .parse(heredocBody);
 
+    this.elements = optionalElements.isPresent() ? optionalElements.get() : ImmutableList.of();
 
     int startIndex = ((InternalSyntaxToken) tmpHeredocToken).startIndex();
     String openingLabel = matcher.group(2);

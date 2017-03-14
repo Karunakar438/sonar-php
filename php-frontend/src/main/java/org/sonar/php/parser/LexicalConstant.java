@@ -103,7 +103,7 @@ public class LexicalConstant {
    * Heredoc
    */
   public static final String HEREDOC = "(?s)"
-    + "<<<[" + WHITESPACE + "]*(\"?([^\r\n'\"]++)\"?)(?:\\r\\n?+|\\n)(.*?)(?:\\r\\n?+|\\n)\\2";
+    + "<<<[" + WHITESPACE + "]*(\"?([^\r\n'\"]++)\"?)(?:\\r\\n?+|\\n)?(.*?)(?:\\r\\n?+|\\n)\\2";
 
   /**
    * Nowdoc
